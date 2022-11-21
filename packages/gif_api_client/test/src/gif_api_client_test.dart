@@ -15,7 +15,6 @@ void main() {
   group('GifApiClient', () {
     late MockHttpClient httpClient;
     late GifApiClient api;
-    const baseUrl = 'rickandmortyapi.com';
     setUpAll(() {
       registerFallbackValue(FakeUri());
     });
@@ -78,7 +77,7 @@ void main() {
 
       test(
           'throws HttpMalformedResponse if response body does not '
-          'contain products key', () async {
+          'contain key', () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
         when(() => response.body).thenReturn('{"test": "test"}');

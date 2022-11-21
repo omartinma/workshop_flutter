@@ -38,10 +38,9 @@ class GifApiClient {
     }
     try {
       final gifsJson = json.decode(response.body) as Map<String, dynamic>;
-      return (gifsJson['data'] as List<dynamic>)
-          .map((e) => Gif.fromJson(e as Map<String, dynamic>))
-          .toList();
-    } on Exception catch (_) {
+      final data = gifsJson['data'] as List<dynamic>;
+      return data.map((e) => Gif.fromJson(e as Map<String, dynamic>)).toList();
+    } catch (_) {
       throw HttpMalformedResponse();
     }
   }

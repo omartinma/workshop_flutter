@@ -1,4 +1,4 @@
-const validResponse = '''
+const validResponse = r'''
 {
   "data": [
     {
@@ -2606,7 +2606,7 @@ const validResponse = '''
         "profile_url": "https://giphy.com/njorg/",
         "username": "njorg",
         "display_name": "Njorg",
-        "description": ""Against the ruin of the world, there is only one defense- the creative act."-Kenneth Rexroth",
+        "description": "Against the ruin of the world, there is only one defense- the creative act.-Kenneth Rexroth",
         "instagram_url": "https://instagram.com/njorg",
         "website_url": "",
         "is_verified": true
