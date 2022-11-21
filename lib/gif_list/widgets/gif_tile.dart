@@ -13,7 +13,7 @@ class GifTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey[200],
-      child: Text(gif.image),
+      child: Image.network(gif.image),
     );
   }
 }
