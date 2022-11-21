@@ -10,8 +10,6 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gif_api_client/gif_api_client.dart';
-
 class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
@@ -32,9 +30,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   Bloc.observer = AppBlocObserver();
-
-  final apiClient = GifApiClient();
-  await apiClient.getGifs(query: 'fire');
 
   await runZonedGuarded(
     () async => runApp(await builder()),

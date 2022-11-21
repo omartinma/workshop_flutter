@@ -14,12 +14,12 @@ class GifListLoading extends GifListState {
 }
 
 class GifListSucceed extends GifListState {
-  GifListSucceed(this.images);
+  GifListSucceed(this.gifs);
 
-  final List<String> images;
+  final List<Gif> gifs;
 
   @override
-  List<Object?> get props => [images];
+  List<Object?> get props => [gifs];
 }
 
 class GifListFailed extends GifListState {

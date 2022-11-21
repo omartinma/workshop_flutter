@@ -6,13 +6,24 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gif_api_client/gif_api_client.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:workshop_flutter/app/app.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 
+class MockGifApiClient extends Mock implements GifApiClient {}
+
 void main() {
+  late GifApiClient apiClient;
+
+  setUp(() {
+    apiClient = MockGifApiClient();
+  });
   group('App', () {
     testWidgets('renders GifListPage', (tester) async {
-      await tester.pumpWidget(const App());
+      await tester.pumpWidget(
+        App(gifApiClient: apiClient),
+      );
       await tester.pumpAndSettle();
       expect(find.byType(GifListPage), findsOneWidget);
     });

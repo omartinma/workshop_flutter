@@ -8,6 +8,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gif_api_client/gif_api_client.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 
@@ -48,7 +49,11 @@ void main() {
     });
 
     testWidgets('renders item when data is ready', (tester) async {
-      when(() => gifListBloc.state).thenReturn(GifListSucceed(const ['']));
+      when(() => gifListBloc.state).thenReturn(
+        GifListSucceed(
+          const [Gif(image: 'image')],
+        ),
+      );
 
       await tester.pumpApp(
         BlocProvider.value(

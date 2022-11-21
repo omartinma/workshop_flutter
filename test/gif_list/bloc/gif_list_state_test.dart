@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gif_api_client/gif_api_client.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 
 void main() {
@@ -18,7 +19,10 @@ void main() {
     group('GifListSucceed', () {
       test('suppports equality', () {
         expect(GifListSucceed(const []), equals(GifListSucceed(const [])));
-        expect(GifListSucceed(const []), isNot(GifListSucceed(const [''])));
+        expect(
+          GifListSucceed(const []),
+          isNot(GifListSucceed(const [Gif(image: 'image')])),
+        );
       });
     });
 

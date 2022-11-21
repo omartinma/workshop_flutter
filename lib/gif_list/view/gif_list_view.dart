@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gif_api_client/gif_api_client.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 import 'package:workshop_flutter/l10n/l10n.dart';
 
@@ -27,7 +28,7 @@ class GifListBody extends StatelessWidget {
           return const GifListLoadingBody();
         } else if (state is GifListSucceed) {
           return GifListSucceedBody(
-            images: state.images,
+            gifs: state.gifs,
           );
         } else if (state is GifListFailed) {
           return const GifListFailedBody();
@@ -60,9 +61,9 @@ class GifListLoadingBody extends StatelessWidget {
 }
 
 class GifListSucceedBody extends StatelessWidget {
-  const GifListSucceedBody({super.key, required this.images});
+  const GifListSucceedBody({super.key, required this.gifs});
 
-  final List<String> images;
+  final List<Gif> gifs;
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +72,13 @@ class GifListSucceedBody extends StatelessWidget {
         crossAxisCount: 3,
       ),
       itemBuilder: (context, index) {
-        final image = images[index];
+        final gif = gifs[index];
         return GifTile(
-          key: ValueKey(key),
-          image: image,
+          key: ValueKey(gif),
+          gif: gif,
         );
       },
-      itemCount: images.length,
+      itemCount: gifs.length,
     );
   }
 }

@@ -6,16 +6,26 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gif_api_client/gif_api_client.dart';
 import 'package:workshop_flutter/l10n/l10n.dart';
 
 extension PumpApp on WidgetTester {
-  Future<void> pumpApp(Widget widget) {
+  Future<void> pumpApp(
+    Widget widget, {
+    GifApiClient? gifApiClient,
+  }) {
     return pumpWidget(
-      MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: widget,
+      MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(value: gifApiClient ?? GifApiClient())
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: widget,
+        ),
       ),
     );
   }
