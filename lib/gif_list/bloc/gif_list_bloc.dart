@@ -8,12 +8,12 @@ part 'gif_list_state.dart';
 
 class GifListBloc extends Bloc<GifListEvent, GifListState> {
   GifListBloc(this._apiClient) : super(GifListInitial()) {
-    on<GifListSearched>(_onInit);
+    on<GifListSearched>(_onSearched);
   }
 
   final GifApiClient _apiClient;
 
-  Future<void> _onInit(
+  Future<void> _onSearched(
     GifListSearched event,
     Emitter<GifListState> emit,
   ) async {
