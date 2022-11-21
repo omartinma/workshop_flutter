@@ -1,7 +1,12 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+    "appBarTitle": "Gif Search",
+    "@appBarTitle": {
+        "description": "Text shown in the AppBar of the main page"
+    },
+    "unexpectedErrorMessage": "An unexpected error ocurred, please try again later",
+    "@unexpectedErrorMessage": {
+        "description": "Text shown when an unexpected error occurs"
     }
+
 }

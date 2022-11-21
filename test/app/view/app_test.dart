@@ -7,13 +7,14 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:workshop_flutter/app/app.dart';
-import 'package:workshop_flutter/counter/counter.dart';
+import 'package:workshop_flutter/gif_list/gif_list.dart';
 
 void main() {
   group('App', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders GifListPage', (tester) async {
       await tester.pumpWidget(const App());
-      expect(find.byType(CounterPage), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.byType(GifListPage), findsOneWidget);
     });
   });
 }

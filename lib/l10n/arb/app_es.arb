@@ -1,7 +1,6 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    "appBarTitle": "Gifs",
+    "unexpectedErrorMessage": "Ha ocurrid un error inesperado, por favor intentalo de nuevo en un rato"
+   
 }
