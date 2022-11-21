@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gif_api_client/gif_api_client.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mocktail_image_network/mocktail_image_network.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 
 import '../../helpers/helpers.dart';
@@ -54,14 +55,15 @@ void main() {
           const [Gif(image: 'image')],
         ),
       );
-
-      await tester.pumpApp(
-        BlocProvider.value(
-          value: gifListBloc,
-          child: const GifListView(),
-        ),
-      );
-      expect(find.byType(GifTile), findsOneWidget);
+      await mockNetworkImages(() async {
+        await tester.pumpApp(
+          BlocProvider.value(
+            value: gifListBloc,
+            child: const GifListView(),
+          ),
+        );
+        expect(find.byType(GifTile), findsOneWidget);
+      });
     });
 
     testWidgets('renders failure view when failing', (tester) async {
