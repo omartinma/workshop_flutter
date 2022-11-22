@@ -11,3 +11,12 @@ class GifListSearched extends GifListEvent {
   @override
   List<Object?> get props => [query];
 }
+
+class GifListShared extends GifListEvent {
+  GifListShared(this.imageUrl);
+
+  final String imageUrl;
+
+  @override
+  List<Object?> get props => [imageUrl];
+}

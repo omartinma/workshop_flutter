@@ -9,17 +9,21 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
+  cached_network_image: ^3.2.2
   cupertino_icons: ^1.0.5
   equatable: 2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  flutter_cache_manager: ^3.3.0
   flutter_localizations:
     sdk: flutter
   gif_api_client:
     path: packages/gif_api_client
+  gif_share_client:
+    path: packages/gif_share_client
   intl: ^0.17.0
-
+  share_plus: ^6.3.0
 
 dev_dependencies:
   bloc_test: ^9.1.0
