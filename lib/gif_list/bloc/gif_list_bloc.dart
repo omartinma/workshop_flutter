@@ -19,7 +19,14 @@ class GifListBloc extends Bloc<GifListEvent, GifListState> {
   ) async {
     emit(GifListLoading());
     try {
-      final gifs = await _apiClient.getGifs(query: event.query ?? '');
+      final List<Gif> gifs;
+      final query = event.query;
+      if (query != null && query.isNotEmpty) {
+        gifs = await _apiClient.getGifs(query: query);
+      } else {
+        gifs = await _apiClient.getTrendingGifs();
+      }
+
       emit(GifListSucceed(gifs));
     } catch (e) {
       emit(GifListFailed());
