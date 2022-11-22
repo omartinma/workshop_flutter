@@ -1,15 +1,9 @@
-// Copyright (c) 2022, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gif_api_client/gif_api_client.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:workshop_flutter/app/app.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
+
+import '../../helpers/helpers.dart';
 
 class MockGifApiClient extends Mock implements GifApiClient {}
 
@@ -19,11 +13,11 @@ void main() {
   setUp(() {
     apiClient = MockGifApiClient();
   });
-  group('App', () {
-    testWidgets('renders GifListPage', (tester) async {
-      await tester.pumpWidget(
-        App(gifApiClient: apiClient),
-      );
+  group('GifListPage', () {
+    testWidgets('renders GifListView', (tester) async {
+      when(() => apiClient.getGifs(query: any(named: 'query')))
+          .thenAnswer((_) async => []);
+      await tester.pumpApp(const GifListPage(), gifApiClient: apiClient);
       await tester.pumpAndSettle();
       expect(find.byType(GifListPage), findsOneWidget);
     });

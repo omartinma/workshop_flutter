@@ -5,9 +5,16 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:gif_api_client/gif_api_client.dart';
 import 'package:workshop_flutter/app/app.dart';
 import 'package:workshop_flutter/bootstrap.dart';
 
 void main() {
-  bootstrap(() => const App());
+  final apiClient = GifApiClient();
+
+  bootstrap(
+    () => App(
+      gifApiClient: apiClient,
+    ),
+  );
 }
