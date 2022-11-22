@@ -24,7 +24,7 @@ void main() {
           (_) async => [],
         );
       },
-      act: (bloc) => bloc.add(GifListSearched()),
+      act: (bloc) => bloc.add(GifListSearched('query')),
       expect: () => contains(GifListLoading()),
     );
 
@@ -38,12 +38,45 @@ void main() {
           ],
         );
       },
-      act: (bloc) => bloc.add(GifListSearched()),
+      act: (bloc) => bloc.add(GifListSearched('query')),
       wait: const Duration(milliseconds: 200),
       expect: () => [
         GifListLoading(),
         GifListSucceed(const [Gif(image: 'image')]),
       ],
+    );
+
+    blocTest<GifListBloc, GifListState>(
+      'calls search gifs api if query is not null',
+      build: () => GifListBloc(apiClient),
+      setUp: () {
+        when(() => apiClient.getGifs(query: any(named: 'query'))).thenAnswer(
+          (_) async => [
+            const Gif(image: 'image'),
+          ],
+        );
+      },
+      act: (bloc) => bloc.add(GifListSearched('query')),
+      wait: const Duration(milliseconds: 200),
+      verify: (bloc) {
+        verify(() => apiClient.getGifs(query: any(named: 'query'))).called(1);
+      },
+    );
+    blocTest<GifListBloc, GifListState>(
+      'calls trenging gifs api if query is  null',
+      build: () => GifListBloc(apiClient),
+      setUp: () {
+        when(() => apiClient.getTrendingGifs()).thenAnswer(
+          (_) async => [
+            const Gif(image: 'image'),
+          ],
+        );
+      },
+      act: (bloc) => bloc.add(GifListSearched()),
+      wait: const Duration(milliseconds: 200),
+      verify: (bloc) {
+        verify(() => apiClient.getTrendingGifs()).called(1);
+      },
     );
 
     blocTest<GifListBloc, GifListState>(
@@ -53,7 +86,7 @@ void main() {
         when(() => apiClient.getGifs(query: any(named: 'query')))
             .thenThrow(const HttpErrorResponse(url: '', statusCode: 400));
       },
-      act: (bloc) => bloc.add(GifListSearched()),
+      act: (bloc) => bloc.add(GifListSearched('query')),
       wait: const Duration(milliseconds: 200),
       expect: () => [
         GifListLoading(),

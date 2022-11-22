@@ -25,9 +25,29 @@ class GifApiClient {
   static const String _language = 'en';
   static const String _baseUrl = 'https://api.giphy.com/v1/gifs';
   static const String _searchEndpoint = '/search?';
+  static const String _trendingEndpoint = '/trending?';
 
   Future<List<Gif>> getGifs({required String query}) async {
     final url = '$_baseUrl${_searchEndpoint}api_key=$_apiKey&q=$query'
+        '&limit=$_limit&rating=$_rating&lang=$_language';
+    final response = await _httpClient.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      throw HttpErrorResponse(
+        url: url,
+        statusCode: response.statusCode,
+      );
+    }
+    try {
+      final gifsJson = json.decode(response.body) as Map<String, dynamic>;
+      final data = gifsJson['data'] as List<dynamic>;
+      return data.map((e) => Gif.fromJson(e as Map<String, dynamic>)).toList();
+    } catch (_) {
+      throw HttpMalformedResponse();
+    }
+  }
+
+  Future<List<Gif>> getTrendingGifs() async {
+    const url = '$_baseUrl${_trendingEndpoint}api_key=$_apiKey'
         '&limit=$_limit&rating=$_rating&lang=$_language';
     final response = await _httpClient.get(Uri.parse(url));
     if (response.statusCode != 200) {
