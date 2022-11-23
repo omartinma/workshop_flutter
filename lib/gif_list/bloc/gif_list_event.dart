@@ -4,9 +4,9 @@ part of 'gif_list_bloc.dart';
 abstract class GifListEvent extends Equatable {}
 
 class GifListSearched extends GifListEvent {
-  GifListSearched([this.query]);
+  GifListSearched([this.query = '']);
 
-  final String? query;
+  final String query;
 
   @override
   List<Object?> get props => [query];
