@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif_api_client/gif_api_client.dart';
+import 'package:gif_share_client/gif_share_client.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 import 'package:workshop_flutter/l10n/l10n.dart';
 
@@ -15,15 +16,18 @@ class App extends StatelessWidget {
   const App({
     super.key,
     required this.gifApiClient,
+    required this.gifShareClient,
   });
 
   final GifApiClient gifApiClient;
+  final GifShareClient gifShareClient;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(value: gifApiClient),
+        RepositoryProvider.value(value: gifShareClient),
       ],
       child: MaterialApp(
         theme: ThemeData(

@@ -1,24 +1,32 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gif_api_client/gif_api_client.dart';
+import 'package:gif_share_client/gif_share_client.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:workshop_flutter/gif_list/gif_list.dart';
 
 class MockGifApiClient extends Mock implements GifApiClient {}
 
+class MockGifShareClient extends Mock implements GifShareClient {}
+
 void main() {
   group('GifListBloc', () {
     late GifApiClient apiClient;
+    late GifShareClient shareClient;
     setUp(() {
       apiClient = MockGifApiClient();
+      shareClient = MockGifShareClient();
     });
     test('initial state is GifListInitial', () {
-      expect(GifListBloc(apiClient).state, equals(GifListInitial()));
+      expect(
+        GifListBloc(apiClient, shareClient).state,
+        equals(GifListInitial()),
+      );
     });
 
     blocTest<GifListBloc, GifListState>(
       'emits [loading] when starts searching',
-      build: () => GifListBloc(apiClient),
+      build: () => GifListBloc(apiClient, shareClient),
       setUp: () {
         when(() => apiClient.getGifs(query: any(named: 'query'))).thenAnswer(
           (_) async => [],
@@ -30,7 +38,7 @@ void main() {
 
     blocTest<GifListBloc, GifListState>(
       'emits [data] if succeeds',
-      build: () => GifListBloc(apiClient),
+      build: () => GifListBloc(apiClient, shareClient),
       setUp: () {
         when(() => apiClient.getGifs(query: any(named: 'query'))).thenAnswer(
           (_) async => [
@@ -48,7 +56,7 @@ void main() {
 
     blocTest<GifListBloc, GifListState>(
       'calls search gifs api if query is not null',
-      build: () => GifListBloc(apiClient),
+      build: () => GifListBloc(apiClient, shareClient),
       setUp: () {
         when(() => apiClient.getGifs(query: any(named: 'query'))).thenAnswer(
           (_) async => [
@@ -64,7 +72,7 @@ void main() {
     );
     blocTest<GifListBloc, GifListState>(
       'calls trenging gifs api if query is  null',
-      build: () => GifListBloc(apiClient),
+      build: () => GifListBloc(apiClient, shareClient),
       setUp: () {
         when(() => apiClient.getTrendingGifs()).thenAnswer(
           (_) async => [
@@ -81,7 +89,7 @@ void main() {
 
     blocTest<GifListBloc, GifListState>(
       'emits [failure] if fails',
-      build: () => GifListBloc(apiClient),
+      build: () => GifListBloc(apiClient, shareClient),
       setUp: () {
         when(() => apiClient.getGifs(query: any(named: 'query')))
             .thenThrow(const HttpErrorResponse(url: '', statusCode: 400));
@@ -92,6 +100,19 @@ void main() {
         GifListLoading(),
         GifListFailed(),
       ],
+    );
+
+    blocTest<GifListBloc, GifListState>(
+      'calls shareImage on GifListSearched',
+      build: () => GifListBloc(apiClient, shareClient),
+      setUp: () {
+        when(() => shareClient.shareImage(url: any(named: 'url')))
+            .thenAnswer((_) async {});
+      },
+      act: (bloc) => bloc.add(GifListShared('url')),
+      verify: (_) {
+        verify(() => shareClient.shareImage(url: 'url')).called(1);
+      },
     );
   });
 }
