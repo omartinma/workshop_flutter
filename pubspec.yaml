@@ -23,7 +23,7 @@ dependencies:
   gif_share_client:
     path: packages/gif_share_client
   intl: ^0.17.0
-  share_plus: ^6.3.0
+  share_plus: ^6.3.3
 
 dev_dependencies:
   bloc_test: ^9.1.0
